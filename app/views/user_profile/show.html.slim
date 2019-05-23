@@ -1,0 +1,21 @@
+br
+div style="display:flex;justify-content:flex-end;flex-direction:row"
+    div.info
+        h2 style="padding:0 8px 0 0" = @user.name
+        - if !current_user.subscribes.where(:s_user_id => @user.id).take
+            = link_to "Подписаться", subscribe_user_profile_path(@user), role:"button", class: "btn btn-outline-primary"
+        - else
+            = link_to "Отписаться", unsubscribe_user_profile_path(current_user.subscribes.where(:s_user_id => @user.id).take), method: "POST", role:"button", class: "btn btn-outline-danger"
+    = image_tag @user.image.variant(resize: "250x250"), class:"img-thumbnail"
+
+br
+
+- @user.news.all.each do |news|
+    div class="jumbotron jumbotron-fluid"
+        div class="container"
+            div style="display:flex" 
+                h3 class="display-8" = link_to news.title, news
+                = image_tag(news.user.image.variant(resize:"32x32"), :class=> "avatar", :style => "width:32px; height:32px;margin-left:auto;margin-right:5px;border-radius:50%") if news.user.image.attached?
+                h3 class="display-8" style='#{"margin-left:auto" if !news.user.image.attached?}' = link_to news.user.name, user_profile_path(news.user.id)
+            p = news.DateTime
+            p class="lead" #{truncate news.text, length: 350} #{link_to 'Далее', news, style:"color:blue" if news.text.length > 350}

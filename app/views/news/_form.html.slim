@@ -1,0 +1,21 @@
+= form_for @news do |f|
+  - if @news.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@news.errors.count, "error")} prohibited this news from being saved:"
+      ul
+        - @news.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :title
+    = f.text_field :title, class: "form-control"
+  .field
+    = f.label :text
+    = f.text_area :text, class: "form-control", rows:"10"
+  div class="custom-file"
+    .field
+      = f.label :Изображение, class:"custom-file-label", for:"customFile", id:"filename"
+      = f.file_field :image, class: "custom-file-input", id:"customFile", onchange:"fileInputChangeSingle(this)"
+  div id="img-preview"
+  br
+  .actions = f.submit value: "Сохранить запись", class: "btn btn-success"

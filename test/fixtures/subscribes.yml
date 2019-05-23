@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  s_user_id: 1
+  schedule_interval_days: 1
+  active: false
+
+two:
+  user_id: 1
+  s_user_id: 1
+  schedule_interval_days: 1
+  active: false

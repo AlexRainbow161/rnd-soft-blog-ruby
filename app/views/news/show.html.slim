@@ -1,0 +1,18 @@
+div class="jumbotron"
+  div class="container"
+    div style="display:flex"
+      h2 class="display-8"
+        = @news.title
+      = image_tag(@news.user.image, :class=> "avatar", :style => "width:32px; height:32px;margin-left:auto;margin-right:5px;border-radius:50%;align-self:center") if @news.user.image.attached?
+      h2 class="display-10" style="align-self:center; #{"margin-left:auto" if !@news.user.image.attached?}"
+        = link_to @news.user.name, user_profile_path(@news.user)
+    hr class="my-4"
+    p class="lead"
+      = @news.text
+    div style="display:flex"
+      = image_tag @news.image.variant(resize: '500x500'), :class => "img-fluid", style:"margin:auto" if @news.image.attached?
+    hr class="my-4"
+    - if current_user.id == @news.user.id
+      => link_to 'Изменить', edit_news_path(@news), class: "btn btn-outline-dark", role: "button"
+      '|
+    =< link_to 'Назад', :back, class: "btn btn-outline-dark", role: "button"

@@ -1,0 +1,20 @@
+h2
+  | Вход
+  br
+= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+  div class="form-group"
+    .field
+      = f.label :Электронная_почта, for:"exampleInputEmail1"
+      = f.email_field :email, autofocus: true, autocomplete: "email", type: "email", class: "form-control", "aria-describedby": "emailHelp", placeholder:"Enter email"
+  div class="form-group"
+   .field
+      = f.label :Пароль, for:"exampleInputPassword1"
+      = f.password_field :password, autocomplete: "current-password", type:"password", class:"form-control", id:"exampleInputPassword1", placeholder:"Password"
+  - if devise_mapping.rememberable?
+    div class="form-check"
+      .field
+        = f.check_box :remember_me, type:"checkbox", class:"form-check-input", id:"exampleCheck1"
+        = f.label :Запомнить_меня, class:"form-check-label", for:"exampleCheck1"
+  .actions
+    = f.submit "Войти", class:"btn btn-primary"
+= render "devise/shared/links"

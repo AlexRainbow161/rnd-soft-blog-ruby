@@ -1,0 +1,19 @@
+h2 Подписки
+table class="table"
+  thead class="thead-dark"
+    tr
+      th scope="col" Пользователь
+      th scope="col" Период рассылки в днях
+      th scope="col" Отписаться
+  tbody
+    - current_user.subscribes.all.each do |subscribe|
+     tr
+      /th scope="row"
+      th scope="row" = User.find(subscribe.s_user_id).email
+      td
+          = form_with(url: change_subscr_period_user_profile_path(subscribe), method:"post") do |f|
+            div class="input-group mb-3"
+              = f.text_field :period, value: subscribe.schedule_interval_days, class:"form-control", "aria-describedby":"button-addon2", style:"width:30px; max-width:50px"
+              div class="input-group-append"
+                = f.submit value:"Сохранить", class:"btn btn-outline-success", id:"button-addon2"
+      td = link_to "Отписаться", unsubscribe_user_profile_path(subscribe), method: :post, class:"btn btn-outline-danger", role:"button"
