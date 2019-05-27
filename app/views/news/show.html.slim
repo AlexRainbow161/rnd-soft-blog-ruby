@@ -5,7 +5,10 @@ div class="jumbotron"
         = @news.title
       = image_tag(@news.user.image, :class=> "avatar", :style => "width:32px; height:32px;margin-left:auto;margin-right:5px;border-radius:50%;align-self:center") if @news.user.image.attached?
       h2 class="display-10" style="align-self:center; #{"margin-left:auto" if !@news.user.image.attached?}"
-        = link_to @news.user.name, user_profile_path(@news.user)
+        - if @news.user.id == current_user.id
+          = link_to @news.user.name, user_profile_index_path
+        - else
+         = link_to @news.user.name, user_profile_path(@news.user)  
     hr class="my-4"
     p class="lead"
       = @news.text

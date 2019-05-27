@@ -1,19 +1,23 @@
 h2 Подписки
-table class="table"
-  thead class="thead-dark"
+table style="max-widtsh:50%" class="table"
+  /thead class="thead-dark"
     tr
       th scope="col" Пользователь
-      th scope="col" Период рассылки в днях
-      th scope="col" Отписаться
+      /th scope="col" Период рассылки в днях
+      th style="text-align:right" scope="col" Отписаться
   tbody
     - current_user.subscribes.all.each do |subscribe|
      tr
       /th scope="row"
-      th scope="row" = User.find(subscribe.s_user_id).email
-      td
-          = form_with(url: change_subscr_period_user_profile_path(subscribe), method:"post") do |f|
-            div class="input-group mb-3"
-              = f.text_field :period, value: subscribe.schedule_interval_days, class:"form-control", "aria-describedby":"button-addon2", style:"width:30px; max-width:50px"
-              div class="input-group-append"
-                = f.submit value:"Сохранить", class:"btn btn-outline-success", id:"button-addon2"
-      td = link_to "Отписаться", unsubscribe_user_profile_path(subscribe), method: :post, class:"btn btn-outline-danger", role:"button"
+      th scope="row" 
+        - @s_user = User.find(subscribe.s_user_id)
+        = image_tag @s_user.image.variant(resize: "64x64"), class: "rounded-circle d-inline" if @s_user.image.attached?
+        h3 class="d-inline" = link_to @s_user.name, user_profile_path(@s_user), style: "padding:0 0 0 8px"
+      / td
+      /     = form_with(url: change_subscr_period_user_profile_path(subscribe), method:"post") do |f|
+      /       div class="input-group mb-3"
+      /         = f.text_field :period, value: subscribe.schedule_interval_days, class:"form-control", "aria-describedby":"button-addon2", style:"width:30px; max-width:50px"
+      /         div class="input-group-append"
+      /           = f.submit value:"Сохранить", class:"btn btn-outline-success", id:"button-addon2"
+      td align="right" = link_to "Отписаться", unsubscribe_user_profile_path(subscribe), method: :post, class:"btn btn-outline-danger", role:"button"
+    td align="right" = link_to "Отписаться От всех", user_profile_index_path,  method: :post, class:"btn btn-outline-danger", role:"button"

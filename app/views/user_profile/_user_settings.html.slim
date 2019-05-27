@@ -1,18 +1,18 @@
 h2 Настройки пользователя
 div style="max-width:50%"
- = form_with(url:change_user_name_user_profile_path(current_user), method:"post") do |f|
-    label for="InputName" Имя пользователя
+ = form_with(url:user_profile_path(current_user), method:"put") do |f|
+    label for="InputName" Имя
     div class="input-group mb-3" id="InputName"
      = f.text_field :name, placeholder: "Имя пользователя", class:"form-control", "aria-describedby":"button-addon2", value: current_user.name
-     div class="input-group-append"
-     = f.submit value: "Сохранить", class:"btn btn-outline-success"
- = form_with(url:change_user_email_user_profile_path(current_user), method:"post") do |f|
-     label for="InputEmail" Электронная почта
-     div class="input-group mb-3" id="InputEmail"
-        = f.text_field :email, placeholder: "Электронная почта", class:"form-control", "aria-describedby":"button-addon2", value: current_user.email
-        div class="input-group-append"
-        = f.submit value: "Сохранить", class:"btn btn-outline-success"
- = form_with(url:upload_file_user_profile_path(current_user), method:"post", id:"photo-form") do |f|
+    label for="InputName" Фамилия
+    div class="input-group mb-3" id="InputLastName"
+     = f.text_field :lastname, placeholder: "Фамилия", class:"form-control", "aria-describedby":"button-addon2", value: "#{current_user.lastname if current_user.lastname}"
+    label for="InputEmail" Электронная почта
+    div class="input-group mb-3" id="InputEmail"
+     = f.text_field :email, placeholder: "Электронная почта", class:"form-control", "aria-describedby":"button-addon2", value: current_user.email
+    = f.submit value: "Сохранить", class: "btn btn-outline-success"
+ = form_with(url:user_profile_path(current_user), method:"put", id:"photo-form") do |f|
+    br
     div id="img-preview"
         - if current_user.image.attached?
             = image_tag current_user.image.variant(resize: "250x250"), class:"img-thumbnail", id:"preview"

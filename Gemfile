@@ -12,6 +12,8 @@ gem "slim-rails"
 
 gem "mini_magick"
 
+gem 'whenever'
+
 gem 'jquery-rails'
 
 gem 'will_paginate', '~> 3.1.0'

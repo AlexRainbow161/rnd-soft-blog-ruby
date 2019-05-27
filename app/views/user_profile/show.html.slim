@@ -6,7 +6,7 @@ div style="display:flex;justify-content:flex-end;flex-direction:row"
             = link_to "Подписаться", subscribe_user_profile_path(@user), role:"button", class: "btn btn-outline-primary"
         - else
             = link_to "Отписаться", unsubscribe_user_profile_path(current_user.subscribes.where(:s_user_id => @user.id).take), method: "POST", role:"button", class: "btn btn-outline-danger"
-    = image_tag @user.image.variant(resize: "250x250"), class:"img-thumbnail"
+    = image_tag @user.image.variant(resize: "250x250"), class:"img-thumbnail" if @user.image.attached?
 
 br
 

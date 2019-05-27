@@ -9,16 +9,17 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
   div class="container"
-    nav class="navbar navbar-expand-lg navbar-light bg-light"
+    nav class="navbar navbar-light shadow-sm sticky-top"
       - if user_signed_in?
         h2
           = link_to "Лента", news_index_path, class: "nav-link"
         h2 id="user"
-          = link_to current_user.name, user_profile_index_path, class: "nav-link"
+          = link_to current_user.name + " #{current_user.lastname if current_user.lastname}", user_profile_index_path, class: "nav-link"
         h2[id="user"] = link_to "Выйти", destroy_user_session_path, method: :delete, class: "nav-link"
     - flash.each do |key, value|
       div role="alert" class="alert alert-#{notice_to_success(key.to_s)}"
         button type="button" class="close" data-dismiss="alert" aria-label="Close"
           span aria-hidden="true"  &times; 
         = value
+    br
     = yield

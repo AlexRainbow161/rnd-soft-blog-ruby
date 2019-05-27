@@ -4,20 +4,28 @@ h2
   = render "devise/shared/error_messages", resource: resource
   div class="form-group"
     .field
-      = f.label :email, for:"exampleInputEmail1"
-      = f.email_field :email, autofocus: true, autocomplete: "email", type:"email", class:"form-control", id:"exampleInputEmail1", "aria-describedby": "emailHelp", placeholder:"Enter email"
+      = f.label :Электронная_почта, for:"exampleInputEmail1"
+      = f.email_field :email, autofocus: true, autocomplete: "email", type:"email", class:"form-control", id:"exampleInputEmail1", "aria-describedby": "emailHelp", placeholder:"Электронная почта"
   div class="form-group"
     .field
-      = f.label :password, for:"exampleInputPassword1"
+      = f.label :Имя, for:"exampleInputName1"
+      = f.email_field :name, autofocus: true, autocomplete: "name", type:"name", class:"form-control", id:"exampleInputName1", placeholder:"Имя"
+  div class="form-group"
+    .field
+      = f.label :Фамилия, for:"exampleInputLastName1"
+      = f.email_field :lastname, autofocus: true, autocomplete: "name", type:"name", class:"form-control", id:"exampleInputLastName1", placeholder:"Фамилия"
+  div class="form-group"
+    .field
+      = f.label :Пароль, for:"exampleInputPassword1"
       - if @minimum_password_length
         em
           | (
           = @minimum_password_length
-          |  characters minimum)
-      = f.password_field :password, autocomplete: "new-password", type:"password", class:"form-control", id:"exampleInputPassword1", placeholder:"Password"
+          |  символов минимум)
+      = f.password_field :password, autocomplete: "new-password", type:"password", class:"form-control", id:"exampleInputPassword1", placeholder:"Пароль"
   .field
-    = f.label :password_confirmation, for: "exampleConfirmPassword1"
-    = f.password_field :password_confirmation, autocomplete: "new-password", type:"password", class:"form-control", id:"exampleConfirmPassword1", placeholder:"Confirm Password"
+    = f.label :Повтор_пароля, for: "exampleConfirmPassword1"
+    = f.password_field :password_confirmation, autocomplete: "new-password", type:"password", class:"form-control", id:"exampleConfirmPassword1", placeholder:"Повтор пароля"
   .actions
-    = f.submit "Sign up", class:"btn btn-primary"
+    = f.submit "Регистрация", class:"btn btn-primary"
 = render "devise/shared/links"

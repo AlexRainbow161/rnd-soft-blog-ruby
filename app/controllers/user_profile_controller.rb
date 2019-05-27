@@ -21,22 +21,34 @@ class UserProfileController < ApplicationController
         end
         
     end
-    def change_user_name
-        current_user.name = params[:name]
-        current_user.save
-        redirect_to user_profile_index_path, success: "Имя пользователя изменено"
-    end
-    def change_user_email
-        current_user.email = params[:email]
-        current_user.save
-        redirect_to user_profile_index_path, success: "Электронная почта изменена"
-    end
-    def upload_file
-        current_user.image = params[:picture]
-        current_user.save
-        redirect_to user_profile_index_path, success: "Фото профиля обновлено"
-    end
+    #fucking shit legacy
+    # def change_user_name
+    #     current_user.name = params[:name]
+    #     current_user.save
+    #     redirect_to user_profile_index_path, success: "Имя пользователя изменено"
+    # end
 
+    # def change_user_lastname
+    #     current_user.lastname = params[:lastname]
+    #     current_user.save
+    #     redirect_to user_profile_index_path, success: "Имя пользователя изменено"
+    # end
+
+    # def change_user_email
+    #     current_user.email = params[:email]
+    #     current_user.save
+    #     redirect_to user_profile_index_path, success: "Электронная почта изменена"
+    # end
+    # def upload_file
+    #     current_user.image = params[:picture]
+    #     current_user.save
+    #     redirect_to user_profile_index_path, success: "Фото профиля обновлено"
+    # end
+    def update
+        current_user.update(user_params)
+        current_user.save
+        redirect_to user_profile_index_path, success: "Настройки профиля сохранены"
+    end
     def subscribe
         @user = set_user;
         @subscr = Subscribe.new(user_id: current_user.id, s_user_id: @user.id, schedule_interval_days: 1, active: true)
@@ -58,4 +70,7 @@ class UserProfileController < ApplicationController
         @user = User.find(params[:id])
     end
 
+    def user_params
+        params.permit(:name, :lastname, :email, :picture)
+    end
 end
