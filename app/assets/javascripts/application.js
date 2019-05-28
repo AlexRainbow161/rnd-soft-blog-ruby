@@ -10,7 +10,8 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery3
+//= require jquery-3.4.1
+//= require bootstrap
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
@@ -65,15 +66,23 @@ function SendCropped(btn){
     cropper.getCroppedCanvas().toBlob(function(blob){
         let form  = $("#photo-form");
         let formData = new FormData(form[0]);
-        formData.delete("picture");
-        formData.append("picture", blob);
+        formData.delete("image");
+        formData.append("image", blob);
         $.ajax({
             url: form.attr("action"),
-            type: "POST",
+            type: "PUT",
             data: formData,
             processData: false,
             contentType: false,
             dataType: "multipart/form-data",
+            success: function(){
+                console.log(form.attr("action"));
+            },
+            error: function(err){
+                console.log(err);
+                console.log(form.attr("action"));
+            }
+
           })
     })
 }

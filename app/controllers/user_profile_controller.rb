@@ -1,5 +1,7 @@
 class UserProfileController < ApplicationController
     before_action :authenticate_user!
+    before_action :subscribes_count
+    before_action :posts_count
 
     add_flash_types :danger
     add_flash_types :success
@@ -39,11 +41,11 @@ class UserProfileController < ApplicationController
     #     current_user.save
     #     redirect_to user_profile_index_path, success: "Электронная почта изменена"
     # end
-    # def upload_file
-    #     current_user.image = params[:picture]
-    #     current_user.save
-    #     redirect_to user_profile_index_path, success: "Фото профиля обновлено"
-    # end
+    def upload_file
+        current_user.image = params[:picture]
+        current_user.save
+        redirect_to user_profile_index_path, success: "Фото профиля обновлено"
+    end
     def update
         current_user.update(user_params)
         current_user.save
@@ -58,11 +60,24 @@ class UserProfileController < ApplicationController
             redirect_back fallback_location: :back, danger: "Что то пошло не так #{@subscr.errors}"
         end
       end
-      def unsubscribe
+    def unsubscribe
         @subscr = Subscribe.where(user_id: current_user.id, id: params[:id]).take
         @subscr.destroy
         redirect_back fallback_location: :back, success: 'Вы отписались.'
-      end
+    end
+
+    def unsubscribe_all
+        current_user.subscribes.destroy_all
+        redirect_back fallback_location: :back, success: 'Вы отписались от всех подписок'
+    end
+
+    def subscribes_count
+        @subscr_cnt = current_user.subscribes.count
+    end
+
+    def posts_count
+        @posts_cnt = current_user.news.count
+    end
 
     private
     
@@ -71,6 +86,6 @@ class UserProfileController < ApplicationController
     end
 
     def user_params
-        params.permit(:name, :lastname, :email, :picture)
+        params.permit(:name, :lastname, :email, :image, :mail_interval)
     end
 end

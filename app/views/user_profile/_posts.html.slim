@@ -1,3 +1,7 @@
+- if @posts_cnt == 0
+  br
+  p style="color:gray; text-align:center" Вы еще не написали ни одного поста
+  hr class="my-4"
 - current_user.news.all.each do |news|
   div class="jumbotron jumbotron-fluid rounded shadow-sm"
     div class="container"

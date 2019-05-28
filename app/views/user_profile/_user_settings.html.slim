@@ -1,4 +1,4 @@
-h2 Настройки пользователя
+br
 div style="max-width:50%"
  = form_with(url:user_profile_path(current_user), method:"put") do |f|
     label for="InputName" Имя
@@ -10,6 +10,9 @@ div style="max-width:50%"
     label for="InputEmail" Электронная почта
     div class="input-group mb-3" id="InputEmail"
      = f.text_field :email, placeholder: "Электронная почта", class:"form-control", "aria-describedby":"button-addon2", value: current_user.email
+    div class="form-group"
+        label for="exampleFormControlSelect1" Период почтовой рассылки
+        = f.select :mail_interval, options_for_select([["Ежедневно", 1], ["Еженедельно", 7], ["Отключить",0]], current_user.mail_interval), {}, {class: "form-control", id: "exampleFormControlSelect1"}
     = f.submit value: "Сохранить", class: "btn btn-outline-success"
  = form_with(url:user_profile_path(current_user), method:"put", id:"photo-form") do |f|
     br
@@ -21,5 +24,5 @@ div style="max-width:50%"
     label for="ChosePicture" Выбрать изображение профиля
     div class="custom-file"
         = f.label :Изображения, class:"custom-file-label", for:"customFile", id:"filename"
-        = f.file_field :picture, class: "custom-file-input", id:"customFile", onchange:"fileInputChangeSingle(this, '250px', '250px', true)"
+        = f.file_field :image, class: "custom-file-input", id:"customFile", onchange:"fileInputChangeSingle(this, '250px', '250px', true)"
         = f.button :"Сохранить", class:"btn btn-outline-success", type: "button", onclick: "SendCropped(this)"    

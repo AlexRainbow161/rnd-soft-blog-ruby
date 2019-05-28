@@ -9,7 +9,7 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
   div class="container"
-    nav class="navbar navbar-light shadow-sm sticky-top"
+    nav class="navbar navbar-light bg-light shadow-sm sticky-top"
       - if user_signed_in?
         h2
           = link_to "Лента", news_index_path, class: "nav-link"

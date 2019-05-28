@@ -1,4 +1,6 @@
-h2 Подписки
+br
+- if @subscr_cnt == 0
+  p style="color:gray; text-align:center" Вы еще ни на кого не подписались
 table style="max-widtsh:50%" class="table"
   /thead class="thead-dark"
     tr
@@ -20,4 +22,4 @@ table style="max-widtsh:50%" class="table"
       /         div class="input-group-append"
       /           = f.submit value:"Сохранить", class:"btn btn-outline-success", id:"button-addon2"
       td align="right" = link_to "Отписаться", unsubscribe_user_profile_path(subscribe), method: :post, class:"btn btn-outline-danger", role:"button"
-    td align="right" = link_to "Отписаться От всех", user_profile_index_path,  method: :post, class:"btn btn-outline-danger", role:"button"
+    td align="right" = link_to "Отписаться От всех", user_profile_unsubscribe_all_path,  method: :post, class:"btn btn-outline-danger", role:"button" if @subscr_cnt > 0

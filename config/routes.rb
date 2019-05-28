@@ -12,5 +12,6 @@ Rails.application.routes.draw do
     end
   end
   root to: 'news#index'
+  post 'user_profile/unsubscribe_all', to: "user_profile#unsubscribe_all"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
