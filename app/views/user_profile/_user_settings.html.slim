@@ -1,5 +1,5 @@
 br
-div style="max-width:50%"
+div
  = form_with(url:user_profile_path(current_user), method:"put") do |f|
     label for="InputName" Имя
     div class="input-group mb-3" id="InputName"
@@ -10,9 +10,12 @@ div style="max-width:50%"
     label for="InputEmail" Электронная почта
     div class="input-group mb-3" id="InputEmail"
      = f.text_field :email, placeholder: "Электронная почта", class:"form-control", "aria-describedby":"button-addon2", value: current_user.email
+    label for="InputAbout" О себе
+    div class="input-group mb-3" id="InputAbout"
+     = f.text_area :about, placeholder: "Расскажите немного о себе", class:"form-control", "aria-describedby":"button-addon2", value: current_user.about, maxlength: "400"
     div class="form-group"
         label for="exampleFormControlSelect1" Период почтовой рассылки
-        = f.select :mail_interval, options_for_select([["Ежедневно", 1], ["Еженедельно", 7], ["Отключить",0]], current_user.mail_interval), {}, {class: "form-control", id: "exampleFormControlSelect1"}
+        = f.select :mail_interval_id, options_for_select([["Ежедневно", 1], ["Еженедельно", 7], ["Отключить",0]], current_user.mail_interval.interval), {}, {class: "form-control", id: "exampleFormControlSelect1"}
     = f.submit value: "Сохранить", class: "btn btn-outline-success"
  = form_with(url:user_profile_path(current_user), method:"put", id:"photo-form") do |f|
     br

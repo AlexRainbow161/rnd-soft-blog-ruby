@@ -11,13 +11,15 @@
 //   line-height: 18px;
 // }
 body{
-  background-color: #f8f9fa!important
+  background-color: #f8f9fa!important;
+  font-family:  'Comfortaa', cursive, 'Lora',serif, verdana, arial, helvetica, sans-serif;
 }
 
 p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
-  line-height: 18px;
+  // line-height: 18px;
+  line-height: 1.5;
+
 }
 
 pre {
@@ -28,6 +30,9 @@ pre {
 
 a {
   color: #000;
+}
+a:hover{
+  text-decoration: none;
 }
 
 th {

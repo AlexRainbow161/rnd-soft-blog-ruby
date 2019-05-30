@@ -8,7 +8,7 @@ div class="jumbotron"
         - if @news.user.id == current_user.id
           = link_to @news.user.name, user_profile_index_path
         - else
-         = link_to @news.user.name, user_profile_path(@news.user)  
+         = link_to @news.user.name, user_profile_path(@news.user)
     hr class="my-4"
     p class="lead"
       = @news.text

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_27_134635) do
+ActiveRecord::Schema.define(version: 2019_05_30_012014) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -33,6 +33,21 @@ ActiveRecord::Schema.define(version: 2019_05_27_134635) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.string "text"
+    t.integer "user_id"
+    t.integer "news_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "mail_intervals", force: :cascade do |t|
+    t.string "name"
+    t.integer "interval"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "news", force: :cascade do |t|
     t.string "title"
     t.string "text"
@@ -40,6 +55,13 @@ ActiveRecord::Schema.define(version: 2019_05_27_134635) do
     t.datetime "updated_at", null: false
     t.string "DateTime"
     t.integer "user_id"
+  end
+
+  create_table "subscribe_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "_type"
   end
 
   create_table "subscribes", force: :cascade do |t|
@@ -67,7 +89,10 @@ ActiveRecord::Schema.define(version: 2019_05_27_134635) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.string "lastname"
-    t.integer "mail_interval"
+    t.integer "mail_interval_id"
+    t.integer "subscribe_type_id"
+    t.string "about"
+    t.integer "age"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

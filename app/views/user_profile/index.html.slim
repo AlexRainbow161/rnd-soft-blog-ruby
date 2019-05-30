@@ -21,7 +21,7 @@ javascript:
     s.on("shown.bs.tab", function(e){
         var href = e.target.href;
         href = href.substring(href.lastIndexOf("#"));
-        localStorage.setItem('savedTab', href);
         history.pushState(null, null, href);
+        localStorage.setItem('savedTab', href);
     })
   })

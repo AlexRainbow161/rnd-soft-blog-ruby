@@ -1,0 +1,2 @@
+class MailInterval < ApplicationRecord
+end

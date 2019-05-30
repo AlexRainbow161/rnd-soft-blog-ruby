@@ -6,7 +6,8 @@ class UserProfileController < ApplicationController
     add_flash_types :danger
     add_flash_types :success
 
-    def Index
+    def index
+        @_types = SubscribeType.all
     end
 
     def show
@@ -48,8 +49,17 @@ class UserProfileController < ApplicationController
     end
     def update
         current_user.update(user_params)
-        current_user.save
-        redirect_to user_profile_index_path, success: "Настройки профиля сохранены"
+        if current_user.save
+            redirect_to user_profile_index_path, success: "Настройки профиля сохранены"
+        elsif current_user.errors.any?
+            errors = ""
+            current_user.errors.full_messages.each do |msg|
+                errors << msg
+            end
+            redirect_to user_profile_index_path, danger: "Ошибка #{errors}"
+        else
+            redirect_to user_profile_index_path, danger: "Ошибка: Что то пошло не так}"
+        end
     end
     def subscribe
         @user = set_user;
@@ -86,6 +96,6 @@ class UserProfileController < ApplicationController
     end
 
     def user_params
-        params.permit(:name, :lastname, :email, :image, :mail_interval)
+        params.permit(:name, :lastname, :email, :image, :mail_interval_id, :subscribe_type_id, :about)
     end
 end

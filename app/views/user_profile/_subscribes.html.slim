@@ -4,9 +4,9 @@ br
 table style="max-widtsh:50%" class="table"
   /thead class="thead-dark"
     tr
-      th scope="col" Пользователь
+      /th scope="col" Пользователь
       /th scope="col" Период рассылки в днях
-      th style="text-align:right" scope="col" Отписаться
+      /th style="text-align:right" scope="col" Отписаться
   tbody
     - current_user.subscribes.all.each do |subscribe|
      tr
@@ -21,5 +21,6 @@ table style="max-widtsh:50%" class="table"
       /         = f.text_field :period, value: subscribe.schedule_interval_days, class:"form-control", "aria-describedby":"button-addon2", style:"width:30px; max-width:50px"
       /         div class="input-group-append"
       /           = f.submit value:"Сохранить", class:"btn btn-outline-success", id:"button-addon2"
-      td align="right" = link_to "Отписаться", unsubscribe_user_profile_path(subscribe), method: :post, class:"btn btn-outline-danger", role:"button"
-    td align="right" = link_to "Отписаться От всех", user_profile_unsubscribe_all_path,  method: :post, class:"btn btn-outline-danger", role:"button" if @subscr_cnt > 0
+      td style="vertical-align:middle" align="right" = link_to "Отписаться", unsubscribe_user_profile_path(subscribe), method: :post, class:"btn btn-outline-danger", role:"button"
+    td
+    td align="right" = link_to "Отписаться от всех", user_profile_unsubscribe_all_path,  method: :post, class:"btn btn-outline-danger", role:"button" if @subscr_cnt > 0

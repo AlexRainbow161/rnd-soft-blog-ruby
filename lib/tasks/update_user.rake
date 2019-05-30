@@ -3,7 +3,8 @@ namespace :update_user do
   task update_mail_interval: :environment do
     users = User.all
     users.each do |user|
-      user.mail_interval = 7
+      user.mail_interval = MailInterval.where(interval: 7).take
+      user.subscribe_type = SubscribeType.where(_type: "all").take
       user.save
     end
   end
