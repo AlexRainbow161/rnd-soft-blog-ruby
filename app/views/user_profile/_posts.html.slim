@@ -3,7 +3,7 @@
   p style="color:gray; text-align:center" Вы еще не написали ни одного поста
   hr class="my-4"
 - current_user.news.all.each do |news|
-  div class="jumbotron jumbotron-fluid rounded shadow-sm"
+  div class="jumbotron jumbotron-fluid rounded shadow-sm news-box"
     div class="container"
       div style="display:flex" 
         h3 class="display-8" = link_to news.title, news

@@ -16,12 +16,11 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
-
+let cropper = NaN;
 // File chose monitor
 /**
  * @param { string } filename
  */
-let cropper = NaN;
 function fileNameFromPath(filename){
     const windowsFileSlash = '\\';
     const UnixFileSlash = '/';

@@ -1,0 +1,10 @@
+css:
+        a { text-decoration:none; color:black; }
+        a:hover{ text-decoration:none; color:blue}
+- @user.subscribes.all.each do |subscr|
+    h1 = link_to subscr.s_user.name, user_profile_url(subscr.s_user)
+    hr
+    - subscr.s_user.news.where(created_at: @interval.day.ago.beginning_of_day..Time.zone.now).order(created_at: :desc).each do |news|
+        h2 = link_to news.title, news_url(news)
+        p = news.text
+        hr

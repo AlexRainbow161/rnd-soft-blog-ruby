@@ -8,6 +8,7 @@ class UserProfileController < ApplicationController
 
     def index
         @_types = SubscribeType.all
+        @intevals = MailInterval.all
     end
 
     def show
@@ -42,11 +43,11 @@ class UserProfileController < ApplicationController
     #     current_user.save
     #     redirect_to user_profile_index_path, success: "Электронная почта изменена"
     # end
-    def upload_file
-        current_user.image = params[:picture]
-        current_user.save
-        redirect_to user_profile_index_path, success: "Фото профиля обновлено"
-    end
+    #def upload_file
+    #    current_user.image = params[:picture]
+    #    current_user.save
+    #   redirect_to user_profile_index_path, success: "Фото профиля обновлено"
+    #end
     def update
         current_user.update(user_params)
         if current_user.save

@@ -1,0 +1,8 @@
+css:
+        a { text-decoration:none; color:black; }
+        a:hover{ text-decoration:none; color:blue}
+- @news.each do |news|
+    h2 = link_to news.user.name, user_profile_url(news.user)
+    h3 = link_to news.title, news_url(news)
+    p = news.text
+    hr
