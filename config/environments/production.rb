@@ -63,6 +63,15 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "blog-rnd-soft_#{Rails.env}"
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:               ENV['SMTP-SERVER'],
+    port:                  ENV['PORT'],
+    user_name:             ENV['EMAIL'],
+    password:              ENV['PASSWORD'],
+    authentication:        "plain",
+    enable_starttls_auto:  true
+   }
   config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.
