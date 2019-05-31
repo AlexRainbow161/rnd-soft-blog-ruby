@@ -21,7 +21,7 @@ class User < ApplicationRecord
 
   after_create do |user|
     user.image.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'user_default.png')), filename: 'user_default.png', content_type: 'image/png')
-    UserMailer.with(user: user).welcome_email.deliver_now
+    UserMailer.with(user: user).welcome_email.deliver_later
   end
 
 end
