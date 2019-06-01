@@ -88,3 +88,9 @@ label {
 .news-box{
   padding: 32px 0 16px 0;
 }
+#customDropDown{
+  user-select: none;
+}
+#customDropDown:hover{
+  color: blue
+}

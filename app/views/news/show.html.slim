@@ -18,4 +18,8 @@ div class="jumbotron jumbotron-fluid news-box rounded shadow-sm"
     - if current_user.id == @news.user.id
       => link_to 'Изменить', edit_news_path(@news), class: "btn btn-outline-dark", role: "button"
       '|
-    =< link_to 'Назад', :back, class: "btn btn-outline-dark", role: "button"
+      => link_to "Удалить", news_path(@news), class: "btn btn-outline-dark", role: "button", method:"DELETE", data: { confirm: 'Вы уверены что хотите удалить запись??' }
+      '|
+      =< link_to 'Назад', :back, class: "btn btn-outline-dark", role: "button"
+
+== render 'comments'

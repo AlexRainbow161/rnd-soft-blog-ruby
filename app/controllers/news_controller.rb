@@ -1,6 +1,7 @@
 class NewsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_news, only: [:show, :edit, :update, :destroy]
+  before_action :check_user_only, only: [:index]
 
   add_flash_types :danger
   add_flash_types :success
@@ -8,7 +9,16 @@ class NewsController < ApplicationController
   # GET /news
   # GET /news.json
   def index
-    @news = News.all.paginate(page:params[:page]).order(created_at: :desc)
+    unless @only_my
+      @news = News.all.paginate(page:params[:page]).order(created_at: :desc)
+    else
+      @news = News.joins("LEFT JOIN users
+        ON users.id = news.user_id
+        LEFT JOIN subscribes
+        ON subscribes.user_id = #{current_user.id}
+        ").where("subscribes.s_user_id = news.user_id").paginate(page:params[:page]).order(created_at: :desc)
+      end
+    
   end
 
   # GET /news/1
@@ -33,7 +43,7 @@ class NewsController < ApplicationController
     @news.user_id = current_user.id
     respond_to do |format|
       if @news.save
-        format.html { redirect_to @news, success: 'News was successfully created.' }
+        format.html { redirect_to @news, success: 'Запись успешно обновлена.' }
         format.json { render :show, status: :created, location: @news }
       else
         format.html { render :new }
@@ -47,7 +57,7 @@ class NewsController < ApplicationController
   def update
     respond_to do |format|
       if @news.update(news_params)
-        format.html { redirect_to @news, success: 'News was successfully updated.' }
+        format.html { redirect_to @news, success: 'Запись успешно обновлена.' }
         format.json { render :show, status: :ok, location: @news }
       else
         format.html { render :edit }
@@ -61,7 +71,7 @@ class NewsController < ApplicationController
   def destroy
     @news.destroy
     respond_to do |format|
-      format.html { redirect_to news_index_url, success: 'News was successfully destroyed.' }
+      format.html { redirect_to news_index_url, success: 'Запись успешно удалена.' }
       format.json { head :no_content }
     end
   end
@@ -73,6 +83,10 @@ class NewsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def news_params
-      params.require(:news).permit(:title, :text, :image)
+      params.require(:news).permit(:title, :text, :image, :only_my)
+    end
+
+    def check_user_only
+      @only_my = params[:only_my]
     end
 end

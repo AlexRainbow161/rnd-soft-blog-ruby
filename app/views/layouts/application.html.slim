@@ -10,18 +10,29 @@ html
     <link href="https://fonts.googleapis.com/css?family=Comfortaa:300,400,500,600,700&display=swap&subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
+    
     div class="container"
-      nav class="navbar navbar-light bg-light shadow-sm sticky-top"
+      nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm" style="font-size:30px"
+        = link_to "Rnd Soft Blog", root_path, class:"navbar-brand"
+        button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+          span class="navbar-toggler-icon"
         - if user_signed_in?
-          h2
-            = link_to "Лента", news_index_path, class: "nav-link"
-          h2 id="user"
-            = link_to current_user.name + " #{current_user.lastname if current_user.lastname}", user_profile_index_path, class: "nav-link"
-          h2[id="user"] = link_to "Выйти", destroy_user_session_path, method: :delete, class: "nav-link"
+          div class="collapse navbar-collapse" id="navbarSupportedContent"
+            ul class="navbar-nav mr-auto"
+              li class="nav-item active"
+                = link_to "Моя лента", news_index_path(only_my: :true), class: "nav-link"
+              /li class="nav-item"
+            /= link_to "Выйти", destroy_user_session_path, method: :delete, class: "nav-link"
+            div class="dropdown"
+              a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" = current_user.name   
+              div class="dropdown-menu" aria-labelledby="dropdownMenuLink"
+                = link_to "Настройки", user_profile_index_path, class:"dropdown-item"
+                div class="dropdown-divider"
+                = link_to "Выйти", destroy_user_session_path, method: :delete, class:"dropdown-item" 
       - flash.each do |key, value|
-        div role="alert" class="alert alert-#{notice_to_success(key.to_s)}"
-          button type="button" class="close" data-dismiss="alert" aria-label="Close"
-            span aria-hidden="true"  &times; 
-          = value
+          div role="alert" class="alert alert-#{notice_to_success(key.to_s)}"
+            button type="button" class="close" data-dismiss="alert" aria-label="Close"
+              span aria-hidden="true"  &times; 
+            = value
       br
       = yield

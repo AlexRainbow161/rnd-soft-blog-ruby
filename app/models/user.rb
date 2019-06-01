@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   validates :about, length: { maximum: 400 }
+  validates :name, format: { with: /\A[a-zA-Z0-9А-Яа-я]+\Z/ }
   has_many :subscribes
   has_many :news
   belongs_to :subscribe_type
@@ -23,5 +24,4 @@ class User < ApplicationRecord
     user.image.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'user_default.png')), filename: 'user_default.png', content_type: 'image/png')
     UserMailer.with(user: user).welcome_email.deliver_later
   end
-
 end

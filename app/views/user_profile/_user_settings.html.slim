@@ -22,7 +22,7 @@ div
             span class="input-group-text" Тип
     br
     = f.submit value: "Сохранить", class: "btn btn-outline-success"
- = form_with(url:user_profile_path(current_user), method:"put", id:"photo-form") do |f|
+ = form_with(url:upload_file_user_profile_path(current_user), method:"post", id:"photo-form") do |f|
     br
     div id="img-preview"
         - if current_user.image.attached?

@@ -59,17 +59,19 @@ function fileInputChangeSingle(pathValue, width="20%", height="20%", needCrop){
 function SendCropped(btn){
     $(document).bind('ajaxSend', function(){
         $(btn).attr("disabled", true).text("Сохранение...");
+        cropper.destroy();
     }).bind("ajaxStop", function(){
         location.reload();
     })
     cropper.getCroppedCanvas().toBlob(function(blob){
+        $('#preview').attr('src', URL.createObjectURL(blob))
         let form  = $("#photo-form");
         let formData = new FormData(form[0]);
         formData.delete("image");
         formData.append("image", blob);
         $.ajax({
             url: form.attr("action"),
-            type: "PUT",
+            type: "POST",
             data: formData,
             processData: false,
             contentType: false,

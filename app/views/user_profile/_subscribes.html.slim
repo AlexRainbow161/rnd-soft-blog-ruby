@@ -8,7 +8,7 @@ table style="max-widtsh:50%" class="table"
       /th scope="col" Период рассылки в днях
       /th style="text-align:right" scope="col" Отписаться
   tbody
-    - current_user.subscribes.all.each do |subscribe|
+    - current_user.subscribes.all.order(created_at: :desc).each do |subscribe|
      tr
       /th scope="row"
       th scope="row" 
