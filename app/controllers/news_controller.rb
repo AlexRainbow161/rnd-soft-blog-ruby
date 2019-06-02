@@ -1,6 +1,6 @@
 class NewsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_news, only: [:show, :edit, :update, :destroy]
+  before_action :set_news, only: [:show, :edit, :update, :destroy, :add_comment]
   before_action :check_user_only, only: [:index]
 
   add_flash_types :danger
@@ -75,6 +75,19 @@ class NewsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def add_comment
+    @comment = @news.comments.create!([{user_id: current_user.id, text: params[:text]}])
+    redirect_to news_path(@news), success: 'Комментарий добавлен.'
+  end
+
+  def delete_comment
+    @comment = Comment.find(params[:comment_id])
+    if @comment.destroy
+      redirect_back fallback_location: :back, success: 'Комментарий удален.'
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_news

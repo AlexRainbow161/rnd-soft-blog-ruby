@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :news
+  resources :news do
+    member do
+      post :add_comment
+      post :delete_comment
+    end
+  end
   resources :user_profile do
     member do
       post :change_subscr_period

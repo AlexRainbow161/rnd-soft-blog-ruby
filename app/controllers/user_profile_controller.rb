@@ -28,23 +28,23 @@ class UserProfileController < ApplicationController
     def upload_file
        current_user.image = params[:image]
        if current_user.save
-        redirect_to user_profile_index_path, success: "Фото профиля обновлено"
+        redirect_to user_profile_path(current_user), success: "Фото профиля обновлено"
        else
-        redirect_to user_profile_index_path, danger: "Ошибка при обновлении профиля"
+        redirect_to user_profile_path(current_user), danger: "Ошибка при обновлении профиля"
        end
     end
     def update
         current_user.update(user_params)
         if current_user.save
-            redirect_to user_profile_index_path, success: "Настройки профиля сохранены"
+            redirect_to user_profile_path(current_user), success: "Настройки профиля сохранены"
         elsif current_user.errors.any?
             errors = ""
             current_user.errors.full_messages.each do |msg|
                 errors << msg
             end
-            redirect_to user_profile_index_path, danger: "Ошибка #{errors}"
+            redirect_to user_profile_path(current_user), danger: "Ошибка #{errors}"
         else
-            redirect_to user_profile_index_path, danger: "Ошибка: Что то пошло не так}"
+            redirect_to user_profile_path(current_user), danger: "Ошибка: Что то пошло не так}"
         end
     end
     def subscribe

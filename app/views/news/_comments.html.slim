@@ -1,2 +1,26 @@
-div style="width:100%;height:400px;background-color:#e9ecef;padding:32px 0 16px 0" class="rounded shadow-sm"
-    h3 Сдесь будут комменты
+br
+div.container
+  div.row
+    div.col
+      h4 Комментарии: #{@news.comments.count}
+    div.col style="text-align:right"
+      a class="btn btn-outline-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" Написать
+  hr.my-4
+  div.row
+    div.col
+      div class="collapse" id="collapseExample"
+        = form_with(url: add_comment_news_path(@news), method:"post") do |f|
+          / = f.label :"Текст комментария", for:"FormInput"
+          = f.text_area :text, id:"FormInput", class:"form-control", placeholder:"Введите текст комментария", "aria-describedby": "formHelp"
+          br
+          = f.submit value: "Добавить", class: "btn btn-outline-primary"
+          hr.my-4
+  - @news.comments.all.order(created_at: :desc).each do |comment|
+    p
+      = image_tag(comment.user.image.variant(resize: "32x32"), :class=> "rounded-circle")
+      span.lead style="padding-left:8px" = link_to comment.user.name, user_profile_path(comment.user)
+      -if comment.user.id == current_user.id || @news.user.id == current_user.id
+        = link_to( delete_comment_news_path(comment_id: comment.id), :role => "button", :class=>"close", :method=> "POST") do
+          span aria-hidden="true"&times;
+    p.lead = comment.text
+    hr.my-4
