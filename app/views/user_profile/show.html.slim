@@ -4,10 +4,13 @@ div.row
     = image_tag @user.image.variant(resize: "250x250"), class:"img-thumbnail" if @user.image.attached?
   div.col-9 style="padding-left:8px;overflow:auto"
     h2 = @user.name
-    - if !current_user.subscribes.where(:s_user_id => @user.id).take
-      = link_to "Подписаться", subscribe_user_profile_path(@user), role:"button", class: "btn btn-outline-primary"
+    -if current_user.id == @user.id
+      = link_to "Настройки", user_settings_user_profile_path(current_user), role:"button", class: "btn btn-outline-primary"
     - else
-      = link_to "Отписаться", unsubscribe_user_profile_path(current_user.subscribes.where(:s_user_id => @user.id).take), method: "POST", role:"button", class: "btn btn-outline-danger"
+      - if !current_user.subscribes.where(:s_user_id => @user.id).take
+        = link_to "Подписаться", subscribe_user_profile_path(@user), role:"button", class: "btn btn-outline-primary"
+      - else
+        = link_to "Отписаться", unsubscribe_user_profile_path(current_user.subscribes.where(:s_user_id => @user.id).take), method: "POST", role:"button", class: "btn btn-outline-danger"
     h4 style="padding:8px 0 0 0" О себе:
     p = @user.about
 

@@ -28,7 +28,7 @@ html
               div class="dropdown-menu" aria-labelledby="dropdownMenuLink"
                 = link_to "Настройки", user_settings_user_profile_path(current_user), class:"dropdown-item"
                 = link_to "Подписки", subscribes_user_profile_path(current_user), class:"dropdown-item"
-                = link_to "Мои посты", posts_user_profile_path(current_user), class:"dropdown-item"
+                = link_to "Моя страница", user_profile_path(current_user), class:"dropdown-item"
                 div class="dropdown-divider"
                 = link_to "Выйти", destroy_user_session_path, method: :delete, class:"dropdown-item" 
       - flash.each do |key, value|

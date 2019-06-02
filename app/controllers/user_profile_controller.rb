@@ -8,7 +8,7 @@ class UserProfileController < ApplicationController
     add_flash_types :success
 
     def index
-        redirect_to posts_user_profile_path(current_user)
+        redirect_to user_profile_path(current_user)
     end
 
     def show
