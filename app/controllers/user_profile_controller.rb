@@ -2,13 +2,13 @@ class UserProfileController < ApplicationController
     before_action :authenticate_user!
     before_action :subscribes_count
     before_action :posts_count
+    before_action :set_types, only: :user_settings
 
     add_flash_types :danger
     add_flash_types :success
 
     def index
-        @_types = SubscribeType.all
-        @intevals = MailInterval.all
+        redirect_to posts_user_profile_path(current_user)
     end
 
     def show
@@ -25,24 +25,6 @@ class UserProfileController < ApplicationController
         end
         
     end
-    #fucking shit legacy
-    # def change_user_name
-    #     current_user.name = params[:name]
-    #     current_user.save
-    #     redirect_to user_profile_index_path, success: "Имя пользователя изменено"
-    # end
-
-    # def change_user_lastname
-    #     current_user.lastname = params[:lastname]
-    #     current_user.save
-    #     redirect_to user_profile_index_path, success: "Имя пользователя изменено"
-    # end
-
-    # def change_user_email
-    #     current_user.email = params[:email]
-    #     current_user.save
-    #     redirect_to user_profile_index_path, success: "Электронная почта изменена"
-    # end
     def upload_file
        current_user.image = params[:image]
        if current_user.save
@@ -88,10 +70,16 @@ class UserProfileController < ApplicationController
     def subscribes_count
         @subscr_cnt = current_user.subscribes.count
     end
-
-    def posts_count
-        @posts_cnt = current_user.news.count
+    def posts
     end
+    
+    def subscribes
+    end
+
+    def user_settings
+    end
+
+    
 
     private
     
@@ -101,5 +89,13 @@ class UserProfileController < ApplicationController
 
     def user_params
         params.permit(:name, :lastname, :email, :image, :mail_interval_id, :subscribe_type_id, :about)
+    end
+
+    def posts_count
+        @posts_cnt = current_user.news.count
+    end
+    def set_types
+        @_types = SubscribeType.all
+        @intevals = MailInterval.all
     end
 end

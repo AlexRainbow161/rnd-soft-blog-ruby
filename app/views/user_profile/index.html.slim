@@ -8,7 +8,7 @@ ul class="nav nav-tabs" id="nav-tab" role="tablist"
     a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false" Настройки
     
 div class="tab-content" id="myTabContent"
-  div class="tab-pane fade" id="subscribes" role="tabpanel" aria-labelledby="subscribes-tab" == render 'subscribes'
+  div class="tab-pane fade" id="subscribes" role="tabpanel" aria-labelledby="subscribes-tab" == render template 'subscribes'
   div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab" == render 'user_settings'
   div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab" == render 'posts'
 javascript:

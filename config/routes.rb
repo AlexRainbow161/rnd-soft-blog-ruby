@@ -9,6 +9,9 @@ Rails.application.routes.draw do
       post :upload_file
       get :subscribe
       post :unsubscribe
+      get :subscribes
+      get :user_settings
+      get :posts
     end
   end
   root to: 'news#index'
