@@ -1,6 +1,6 @@
 class NewsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_news, only: [:show, :edit, :update, :destroy, :add_comment]
+  before_action :set_news, only: %i[show edit update destroy add_comment]
   before_action :check_user_only, only: [:index]
 
   add_flash_types :danger
@@ -9,22 +9,20 @@ class NewsController < ApplicationController
   # GET /news
   # GET /news.json
   def index
-    unless @only_my
-      @news = News.all.paginate(page:params[:page]).order(created_at: :desc)
-    else
+    if @only_my
       @news = News.joins("LEFT JOIN users
         ON users.id = news.user_id
         LEFT JOIN subscribes
         ON subscribes.user_id = #{current_user.id}
-        ").where("subscribes.s_user_id = news.user_id").paginate(page:params[:page]).order(created_at: :desc)
-      end
-    
+        ").where('subscribes.s_user_id = news.user_id').paginate(page: params[:page]).order(created_at: :desc)
+    else
+      @news = News.all.paginate(page: params[:page]).order(created_at: :desc)
+    end
   end
 
   # GET /news/1
   # GET /news/1.json
-  def show
-  end
+  def show; end
 
   # GET /news/new
   def new
@@ -32,8 +30,7 @@ class NewsController < ApplicationController
   end
 
   # GET /news/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /news
   # POST /news.json
@@ -77,7 +74,7 @@ class NewsController < ApplicationController
   end
 
   def add_comment
-    @comment = @news.comments.create!([{user_id: current_user.id, text: params[:text]}])
+    @comment = @news.comments.create!([{ user_id: current_user.id, text: params[:text] }])
     redirect_to news_path(@news), success: 'Комментарий добавлен.'
   end
 
@@ -89,17 +86,18 @@ class NewsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_news
-      @news = News.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def news_params
-      params.require(:news).permit(:title, :text, :image, :only_my)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_news
+    @news = News.find(params[:id])
+  end
 
-    def check_user_only
-      @only_my = params[:only_my]
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def news_params
+    params.require(:news).permit(:title, :text, :image, :only_my)
+  end
+
+  def check_user_only
+    @only_my = params[:only_my]
+  end
 end

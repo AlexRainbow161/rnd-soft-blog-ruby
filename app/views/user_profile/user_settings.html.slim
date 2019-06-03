@@ -1,4 +1,3 @@
-br
 div style="max-width:50%"
  = form_with(url:user_profile_path(current_user), method:"put") do |f|
     label for="InputName" Имя
@@ -24,13 +23,13 @@ div style="max-width:50%"
     = f.submit value: "Сохранить", class: "btn btn-outline-success"
  = form_with(url:upload_file_user_profile_path(current_user), method:"post", id:"photo-form") do |f|
     br
-    div id="img-preview"
+      div#img-preview
         - if current_user.image.attached?
             = image_tag current_user.image.variant(resize: "250x250"), class:"img-thumbnail", id:"preview"
         - else
-            = image_tag 'user_default.png', class:"img-thumbnail", style: "width:250px;heigth:250px", id:"preview" 
+            = image_tag 'user_default.png', class:"img-thumbnail", style: "width:250px;heigth:250px", id:"preview"
     label for="ChosePicture" Выбрать изображение профиля
     div class="custom-file"
         = f.label :Изображения, class:"custom-file-label", for:"customFile", id:"filename"
         = f.file_field :image, class: "custom-file-input", id:"customFile", onchange:"fileInputChangeSingle(this, '250px', '250px', true)"
-        = f.button :"Сохранить", class:"btn btn-outline-success", type: "button", onclick: "SendCropped(this)"    
+        = f.button :"Сохранить", class:"btn btn-outline-success", type: "button", onclick: "SendCropped(this)"

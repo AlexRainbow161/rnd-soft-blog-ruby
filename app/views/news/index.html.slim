@@ -1,22 +1,7 @@
 h2 = link_to 'Новая Запись', new_news_path, class: "btn btn-outline-primary", role: "button", id: "AddButton"
 h1 = @user_news  
 - @news.each do |news|
-  div class="jumbotron jumbotron-fluid rounded shadow-sm news-box"
-    div class="container"
-      div style="display:flex" 
-        h3 class="display-8" = link_to news.title, news
-        = image_tag(news.user.image.variant(resize:"32x32"), :class=> "avatar", :style => "width:32px; height:32px;margin-left:auto;margin-right:5px;border-radius:50%") if news.user.image.attached?
-        h3 class="display-8" style='#{"margin-left:auto" if !news.user.image.attached?}' 
-         - if news.user.id != current_user.id
-          = link_to news.user.name, user_profile_path(news.user.id)
-         - else
-          = link_to news.user.name, user_profile_index_path
-      p = time_ago_in_words(news.created_at)
-      hr class="my-4"
-      p class="lead" #{truncate news.text, length: 350} #{link_to 'Далее', news, style:"color:blue" if news.text.length > 350}
-      / - if news.user.id != current_user.id && !current_user.subscribes.where(:s_user_id => news.user.id).take
-      /   div class="btn-group" role="group" aria-label="Basic example"
-      /     = link_to 'Подписаться', subscribe_user_profile_path(news.user), class: "btn btn-secondary", role:"button"
+    = render partial: 'layouts/post', locals: {news: news}
 div style="display:flex"
   div style="margin:auto"
     = will_paginate @news, renderer: WillPaginate::ActionView::BootstrapLinkRenderer

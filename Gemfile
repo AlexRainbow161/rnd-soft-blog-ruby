@@ -12,7 +12,7 @@ gem "slim-rails"
 
 gem "mini_magick"
 
-gem 'whenever'
+gem 'whenever', require: false
 
 gem 'will_paginate', '~> 3.1.0'
 

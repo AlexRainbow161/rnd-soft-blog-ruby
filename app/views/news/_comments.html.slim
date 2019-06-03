@@ -24,3 +24,13 @@ div.container
           span aria-hidden="true"&times;
     p.lead = comment.text
     hr.my-4
+
+javascript:
+  $('#collapseExample').on('shown.bs.collapse', function () {
+      $('html, body').animate({
+          scrollTop: $('div.collapse').offset().top + $('form').height()
+      }, 'fast');
+      $('#FormInput').focus();
+  }).on('hidden.bs.collapse', function () {
+     $('#FormInput').blur();
+  });

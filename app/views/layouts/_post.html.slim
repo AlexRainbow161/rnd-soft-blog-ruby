@@ -1,17 +1,13 @@
-/Сделать переиспользуемым див новости
-/ div class="jumbotron jumbotron-fluid rounded shadow-sm news-box"
-/     div class="container"
-/       div style="display:flex" 
-/         h3 class="display-8" = link_to news.title, news
-/         = image_tag(news.user.image.variant(resize:"32x32"), :class=> "avatar", :style => "width:32px; height:32px;margin-left:auto;margin-right:5px;border-radius:50%") if news.user.image.attached?
-/         h3 class="display-8" style='#{"margin-left:auto" if !news.user.image.attached?}' 
-/          - if news.user.id != current_user.id
-/           = link_to news.user.name, user_profile_path(news.user.id)
-/          - else
-/           = link_to news.user.name, user_profile_index_path
-/       p = news.DateTime
-/       hr class="my-4"
-/       p class="lead" #{truncate news.text, length: 350} #{link_to 'Далее', news, style:"color:blue" if news.text.length > 350}
-/       div class="btn-group" role="group" aria-label="Basic example"
-/         - if news.user.id != current_user.id && !current_user.subscribes.where(:s_user_id => news.user.id).take
-/           = link_to 'Подписаться', subscribe_user_profile_path(news.user), class: "btn btn-secondary", role:"button"
+div class="jumbotron jumbotron-fluid rounded shadow-sm news-box"
+  div class="container"
+    div style="display:flex"
+      h3 class="display-8" = link_to news.title, news
+      = image_tag(news.user.image.variant(resize:"32x32"), :class=> "avatar", :style => "width:32px; height:32px;margin-left:auto;margin-right:5px;border-radius:50%") if news.user.image.attached?
+      h3 class="display-8" style='#{"margin-left:auto" unless news.user.image.attached?}'
+        - if news.user.id != current_user.id
+          = link_to news.user.name, user_profile_path(news.user.id)
+        - else
+          = link_to news.user.name, user_profile_index_path
+    p = time_ago_in_words(news.created_at)
+    hr class="my-4"
+    p class="lead" #{truncate news.text, length: 350} #{link_to 'Далее', news, style:"color:blue" if news.text.length > 350}

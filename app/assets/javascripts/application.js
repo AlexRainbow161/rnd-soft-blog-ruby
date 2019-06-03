@@ -59,12 +59,13 @@ function fileInputChangeSingle(pathValue, width="20%", height="20%", needCrop){
 function SendCropped(btn){
     $(document).bind('ajaxSend', function(){
         $(btn).attr("disabled", true).text("Сохранение...");
+        //$('#preview').after(`<div class="progress"><div id="progr" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%"></div></div>`);
         cropper.destroy();
     }).bind("ajaxStop", function(){
         location.reload();
-    })
+    });
     cropper.getCroppedCanvas().toBlob(function(blob){
-        $('#preview').attr('src', URL.createObjectURL(blob))
+        $('#preview').attr('src', URL.createObjectURL(blob));
         let form  = $("#photo-form");
         let formData = new FormData(form[0]);
         formData.delete("image");
@@ -82,8 +83,7 @@ function SendCropped(btn){
             error: function(err){
                 console.log(err);
                 console.log(form.attr("action"));
-            }
-
-          })
-    })
+            },
+          });
+    });
 }

@@ -9,9 +9,8 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
-#create schema
 
-ActiveRecord::Schema.define(version: 2019_05_30_012014) do
+ActiveRecord::Schema.define(version: 2019_06_03_093407) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -38,6 +37,13 @@ ActiveRecord::Schema.define(version: 2019_05_30_012014) do
     t.string "text"
     t.integer "user_id"
     t.integer "news_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.string "news_id"
+    t.string "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

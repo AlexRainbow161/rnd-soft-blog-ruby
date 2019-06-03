@@ -5,11 +5,11 @@ h2
   div class="form-group"
     .field
       = f.label :Электронная_почта, for:"exampleInputEmail1"
-      = f.email_field :email, autofocus: true, autocomplete: "email", type: "email", class: "form-control", "aria-describedby": "emailHelp", placeholder:"Enter email"
+      = f.email_field :email, autofocus: true, autocomplete: "email", type: "email", class: "form-control", "aria-describedby": "emailHelp", placeholder:"Электронная почта"
   div class="form-group"
-   .field
-      = f.label :Пароль, for:"exampleInputPassword1"
-      = f.password_field :password, autocomplete: "current-password", type:"password", class:"form-control", id:"exampleInputPassword1", placeholder:"Password"
+    .field
+    = f.label :Пароль, for:"exampleInputPassword1"
+      = f.password_field :password, autocomplete: "current-password", type:"password", class:"form-control", id:"exampleInputPassword1", placeholder:"Пароль"
   - if devise_mapping.rememberable?
     div class="form-check"
       .field
