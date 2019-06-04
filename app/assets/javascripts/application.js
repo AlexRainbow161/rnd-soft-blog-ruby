@@ -87,3 +87,26 @@ function SendCropped(btn){
           });
     });
 }
+
+$.fn.likeListnerOn = function(){
+    $('.like-form').on('ajax:success', function(event){
+        btn = $(this).children('button');
+        btn.children('span').html(event.detail[0].likes);
+        btn.children('img').attr('src',event.detail[0].img);
+    });
+};
+$.fn.FavoriteListnerOn = function(){
+    $('.favorite-form').on('ajax:success', function(event){
+        if(event.detail[0].result === 'deleted' && document.URL.includes('favs')){
+            parents = $(this).parents().map(function(){
+                if(!!$(this).attr('class') && $(this).attr('class').includes('jumbotron-fluid')){
+                    $(this.remove());
+                }
+            });
+        }
+        else{
+            btn = $(this).children('button');
+            btn.children('img').attr('src',event.detail[0].img);
+        }
+    });
+};//

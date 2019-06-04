@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 class NewsController < ApplicationController
+  include NewsHelper
   before_action :authenticate_user!
-  before_action :set_news, only: %i[show edit update destroy add_comment]
+  before_action :set_news, only: [:show, :edit, :update, :destroy, :add_comment, :like, :favorite_add]
   before_action :check_user_only, only: [:index]
 
   add_flash_types :danger
@@ -82,6 +85,57 @@ class NewsController < ApplicationController
     @comment = Comment.find(params[:comment_id])
     if @comment.destroy
       redirect_back fallback_location: :back, success: 'Комментарий удален.'
+    end
+  end
+
+  def like
+    respond_to do |format|
+      user_like = check_like(@news)
+      if user_like
+        if user_like.destroy
+          @img = ActionController::Base.helpers.asset_path('svg/heart-regular.svg')
+          format.json { render json: { likes: @news.likes.count, img: @img }, status: :ok }
+        else
+          format.json { render json: @like.errors, status: :unprocessable_entity }
+        end
+      else
+        @like = Like.new(user_id: current_user.id, news_id: @news.id)
+        if @like.save
+          @img = ActionController::Base.helpers.asset_path('svg/heart-solid.svg')
+          format.json { render json: { likes: @news.likes.count, img: @img }, status: :ok }
+        else
+          format.json { render json: @like.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+  end
+
+  def favs
+    @news = News.joins("LEFT JOIN favorites ON favorites.news_id = news.id").where("news.id = favorites.news_id and favorites.user_id = #{current_user.id}")
+    respond_to do |format|
+      format.html {render :'news/favorites'}
+    end
+  end
+
+  def favorite_add
+    respond_to do |format|
+      user_favorite = check_favorite(@news)
+      if user_favorite
+        if user_favorite.destroy
+          @img = ActionController::Base.helpers.asset_path('svg/star-regular.svg')
+          format.json {render json: {img: @img, result: "deleted"}, status: :ok}
+        else
+          format.json {render json: user_favorite.errors, status: :unprocessable_entity}
+        end
+      else
+        @fav = Favorite.new(user_id: current_user.id, news_id: @news.id)
+        if @fav.save
+          @img = ActionController::Base.helpers.asset_path('svg/star-solid.svg')
+          format.json {render json: {img: @img, result: "added"}, status: :ok}
+        else
+          format.json {render json: @fav.errors, status: :unprocessable_entity}
+        end
+      end
     end
   end
 

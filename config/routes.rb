@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
+  get 'news/favs', to: 'news#favs'
   devise_for :users
   resources :news do
     member do
       post :add_comment
       post :delete_comment
+      post :like
+      post :favorite_add
     end
   end
   resources :user_profile do

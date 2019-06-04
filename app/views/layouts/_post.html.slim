@@ -11,3 +11,10 @@ div class="jumbotron jumbotron-fluid rounded shadow-sm news-box"
     p = time_ago_in_words(news.created_at)
     hr class="my-4"
     p class="lead" #{truncate news.text, length: 350} #{link_to 'Далее', news, style:"color:blue" if news.text.length > 350}
+    div.btn-group role="group"
+      = button_to like_news_path(news), form_class: "like-form" , class: "btn btn-outline-secondary btn-sm like-btn", remote: :true, style: "border:none", method: :post
+        = image_tag("svg/heart-#{check_like(news) ? 'solid' : 'regular'}", :class => 'svg-btn-icon', :"data-liked" => "false")
+        span style="padding:0 0 0 5px;"
+          = news.likes.count
+      = button_to favorite_add_news_path(news), form_class: "favorite-form", class: "btn btn-outline-secondary btn-sm like-btn", style: "border:none", remote: :true, method: :post
+        = image_tag("svg/star-#{check_favorite(news) ? 'solid' : 'regular'}", :class => 'svg-btn-icon', :"data-favorite" => "false")
